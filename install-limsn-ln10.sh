@@ -90,13 +90,19 @@ guixinstall()
     wget 'https://sv.gnu.org/people/viewgpg.php?user_id=15145' -qO - | sudo -i gpg --import -
     wget 'https://sv.gnu.org/people/viewgpg.php?user_id=127547' -qO - | sudo -i gpg --import -
     sudo ./ln10/guix-install-mod.sh
-    source /home/admin/.guix-profile/etc/profile 
 
   ## using guile-3.0.2
     guix install glibc-utf8-locales guile-dbi
-    sudo guix install glibc-utf8-locales         
+    sudo guix install glibc-utf8-locales
+    export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
              
     guix package --install-from-file=/home/admin/ln10/artanis51.scm
+
+    source /home/admin/.guix-profile/etc/profile 
+
+
+      guix install glibc-utf8-locales
+     export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
 
 
     
@@ -107,7 +113,7 @@ guixinstall()
 initdb()
 {
     _msg "configuring db"
-    git clone --depth 1 git@github.com:mbcladwell/ln10.git 
+    git clone --depth 1 https://github.com/mbcladwell/ln10.git 
 
     sudo chmod -R a=rwx /home/admin/ln10
 
@@ -120,8 +126,8 @@ initdb()
 
     eval "sudo pg_ctlcluster $PGMAJOR main restart"
 
-psql -U admin -h 127.0.0.1 postgres -a -f /home/admin/ln10/initdba.sql
-psql -U admin -h 127.0.0.1 lndb -a -f /home/admin/ln10/initdbb.sql
+psql -U postgres -h 127.0.0.1 -a -f /home/admin/ln10/initdba.sql
+psql -U postgres -h 127.0.0.1 lndb -a -f /home/admin/ln10/initdbb.sql
 psql -U ln_admin -h 127.0.0.1 -d lndb -a -f /home/admin/ln10/create-db.sql
 psql -U ln_admin -h 127.0.0.1 -d lndb -a -f /home/admin/ln10/example-data.sql
    

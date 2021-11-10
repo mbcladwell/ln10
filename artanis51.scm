@@ -98,7 +98,7 @@
     (propagated-inputs
      `(("guile-json" ,guile-json-3) 
        ("guile-readline" ,guile-readline)
-       ("guile-redis" ,guile-redisk)))
+       ("guile-redis" ,guile-redis)))
     (native-inputs
      `(("bash"       ,bash)         ;for the `source' builtin
        ("pkgconfig"  ,pkg-config)
