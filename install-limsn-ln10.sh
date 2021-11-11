@@ -107,10 +107,10 @@ guixinstall()
 
     mkdir /home/admin/.configure
     mkdir /home/admin/.configure/limsn
-    cp /home/admin/ln10/artanis.conf /home/admin/.config/limsn
+    cp /home/admin/ln10/artanis.conf /home/admin/.configure/limsn
 
-    sudo sed -i 's/db.addr = 127.0.0.1/db.addr = $IPADDRESS/' /home/admin/.config/limsn/artanis.conf
-    sudo sed -i 's/cookie.maxplates = 100/cookie.maxplates = $MAXNUMPLATES/'  /home/admin/.config/limsn/artanis.conf
+    sudo sed -i 's/db.addr = 127.0.0.1/db.addr = $IPADDRESS/' /home/admin/.configure/limsn/artanis.conf
+    sudo sed -i 's/cookie.maxplates = 100/cookie.maxplates = $MAXNUMPLATES/'  /home/admin/.configure/limsn/artanis.conf
 
     
     source /home/admin/.guix-profile/etc/profile     
