@@ -105,6 +105,14 @@ guixinstall()
              
     guix package --install-from-file=/home/admin/ln10/artanis51.scm
 
+    mkdir /home/admin/.configure
+    mkdir /home/admin/.configure/limsn
+    cp /home/admin/ln10/artanis.conf /home/admin/.config/limsn
+
+    sudo sed -i 's/db.addr = 127.0.0.1/db.addr = $IPADDRESS/' /home/admin/.config/limsn/artanis.conf
+    sudo sed -i 's/cookie.maxplates = 100/cookie.maxplates = $MAXNUMPLATES/'  /home/admin/.config/limsn/artanis.conf
+
+    
     source /home/admin/.guix-profile/etc/profile     
      export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"    
 }
