@@ -1,17 +1,16 @@
 #!/bin/sh
 
-  mkdir lndata
-    echo "export PGDATA=\"/home/admin/lndata\"" >> /home/admin/.bashrc
-    export PGDATA="/home/admin/lndata"
+source /home/admin/.guix-profile/etc/profile 
     export LC_ALL="C"
-    initdb -D /home/admin/lndata
-
+  
     sudo chmod -R a=rwx /home/admin/ln10
 
-    sudo sed -i 's/host[ ]*all[ ]*all[ ]*127.0.0.1\/32[ ]*md5/host    all        all             127.0.0.1\/32        trust/' /home/admin/lndata/pg_hba.conf
-    sudo sed -i 's/\#listen_addresses =/listen_addresses =/'  /home/admin/lndata/postgresql.conf
+pg_ctl -D /var/lib/postgresql/11/main -l /var/log/postgresql/postgresql-11-main.log stop
 
-    pg_ctl -D /home/admin/lndata -l logfile start
+    sudo sed -i 's/host[ ]*all[ ]*all[ ]*127.0.0.1\/32[ ]*md5/host    all        all             127.0.0.1\/32        trust/' /var/lib/postgresql/11/main/pg_hba.conf
+    sudo sed -i 's/\#listen_addresses =/listen_addresses =/'  /var/lib/postgresql/11/main/postgresql.conf
+
+pg_ctl -D /var/lib/postgresql/11/main -l /var/log/postgresql/postgresql-11-main.log start
     
     psql -U admin -h 127.0.0.1 postgres -a -f /home/admin/ln10/initdba.sql
     psql -U admin -h 127.0.0.1 lndb -a -f /home/admin/ln10/initdbb.sql
@@ -20,3 +19,5 @@
 
 echo "LIMS*Nucleus database successfully installed."
 echo "Run 'nohup ~/run-limsn.sh' to start the application server in detached mode."
+
+
