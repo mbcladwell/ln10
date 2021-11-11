@@ -114,7 +114,24 @@ initdb()
     _msg "configuring db"
 
     ## note this must be in separate script:
-     /home/admin/ln10/install-lnpg.sh
+##    /home/admin/ln10/install-lnpg.sh
+
+source /home/admin/.guix-profile/etc/profile 
+    export LC_ALL="C"
+  
+    sudo chmod -R a=rwx /home/admin/ln10
+    sudo service postgresql stop
+    sudo sed -i 's/host[ ]*all[ ]*all[ ]*127.0.0.1\/32[ ]*md5/host    all        all             127.0.0.1\/32        trust/' /etc/postgresql/11/main/pg_hba.conf
+    sudo sed -i 's/\#listen_addresses =/listen_addresses =/'  /etc/postgresql/11/main/postgresql.conf
+    sudo service postgresql start
+    
+    psql -U postgres -h 127.0.0.1 postgres -a -f /home/admin/ln10/initdba.sql
+    psql -U postgres -h 127.0.0.1 lndb -a -f /home/admin/ln10/initdbb.sql
+    psql -U ln_admin -h 127.0.0.1 -d lndb -a -f /home/admin/ln10/create-db.sql
+    psql -U ln_admin -h 127.0.0.1 -d lndb -a -f /home/admin/ln10/example-data.sql   
+
+ git clone https://github.com/mbcladwell/limsn.git
+    
 }
 
 main()
