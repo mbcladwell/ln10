@@ -73,7 +73,7 @@
   ;; #:use-module (artanis utils)
   ;; #:use-module (artanis irregex)
   ;; #:use-module (artanis config)  
-  #:use-module (dbi dbi)    
+;;  #:use-module (dbi dbi)    
   #:use-module ((srfi srfi-1) #:select (alist-delete)))
 
 (define-public artanis-051
