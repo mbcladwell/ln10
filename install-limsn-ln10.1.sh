@@ -85,7 +85,7 @@ updatesys()
 {
     sudo DEBIAN_FRONTEND=noninteractive apt-get --assume-yes update
     sudo DEBIAN_FRONTEND=noninteractive apt-get --assume-yes upgrade
-    sudo DEBIAN_FRONTEND=noninteractive apt-get  --assume-yes install gnupg git nscd postgresql-client  postgresql-contrib nano
+    sudo DEBIAN_FRONTEND=noninteractive apt-get  --assume-yes install gnupg git nscd postgresql-client nano
 }
 
 
@@ -99,11 +99,11 @@ guixinstall()
     sudo ./ln10/guix-install-mod.sh
 
   ## using guile-3.0.2
-    guix install glibc-utf8-locales guile-dbi postgresql@13.1 gnuplot
+    guix install glibc-utf8-locales guile-dbi
     sudo guix install glibc-utf8-locales
     export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
              
-    guix package --install-from-file=/home/admin/ln10/artanis51.scm
+    guix package --install-from-file=/home/admin/ln10/limsn.scm
 
     mkdir /home/admin/.configure
     mkdir /home/admin/.configure/limsn
@@ -126,11 +126,16 @@ initdb()
 
 source /home/admin/.guix-profile/etc/profile 
     export LC_ALL="C"
-  
+    
     sudo chmod -R a=rwx /home/admin/ln10
     sudo service postgresql stop
-    sudo sed -i 's/host[ ]*all[ ]*all[ ]*127.0.0.1\/32[ ]*md5/host    all        all             127.0.0.1\/32        trust/' /etc/postgresql/11/main/pg_hba.conf
-    sudo sed -i 's/\#listen_addresses =/listen_addresses =/'  /etc/postgresql/11/main/postgresql.conf
+
+    PGMAJOR=$(eval "ls /etc/postgresql")
+    _msg "Postgresql major version: $PGMAJOR"
+    PGHBACONF="/etc/postgresql/$PGMAJOR/main/pg_hba.conf"
+    sudo sed -i 's/host[ ]*all[ ]*all[ ]*127.0.0.1\/32[ ]*md5/host    all        all             127.0.0.1\/32        trust/' $PGHBACONF
+    PGCONF="/etc/postgresql/$PGMAJOR/main/postgresql.conf"
+    sudo sed -i 's/\#listen_addresses =/listen_addresses =/'  $PGCONF
     sudo service postgresql start
     
     psql -U postgres -h 127.0.0.1 postgres -a -f /home/admin/ln10/initdba.sql
@@ -138,7 +143,7 @@ source /home/admin/.guix-profile/etc/profile
     psql -U ln_admin -h 127.0.0.1 -d lndb -a -f /home/admin/ln10/create-db.sql
     psql -U ln_admin -h 127.0.0.1 -d lndb -a -f /home/admin/ln10/example-data.sql   
 
- git clone https://github.com/mbcladwell/limsn.git
+
     
 }
 
