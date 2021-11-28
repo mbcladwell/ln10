@@ -133,11 +133,11 @@
 		   		(("format #f \"http://~a:~a\" \\(get-conf '\\(host addr\\)\\)")
 		   	 	 "format #f \"http://~a:~a\" real-host"))
 	
-		   (substitute* "test4.txt"			      			       
+		   (substitute* "artanis/env.scm"			      			       
 				(("\\(or \\(%current-toplevel\\)\n")
 				""
 				))
-		   (substitute* "test4.txt"			      
+		   (substitute* "artanis/env.scm"			      
 				(("\\(find-ENTRY-path identity #t\\)\\)")
 				"\"/tmp/limsn\""
 				))		   		   
