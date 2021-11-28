@@ -132,6 +132,11 @@
 		   (substitute* "artanis/config.scm"
 		   		(("format #f \"http://~a:~a\" \\(get-conf '\\(host addr\\)\\)")
 		   	 	 "format #f \"http://~a:~a\" real-host"))
+
+		   (substitute* "artanis/env.scm"			      
+			       (("\\(find-ENTRY-path identity #t\\)")
+				"\"/tmp/limsn\""))
+
 		   
 		   (substitute* "artanis/artanis.scm"
 		   		(("               static-page-emitter\n")
