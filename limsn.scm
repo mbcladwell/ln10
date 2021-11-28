@@ -237,7 +237,7 @@ more.")
   (package
     (name "limsn")
     (version "0.1.0")
-   (source "./limsn-0.1.tar.gz")
+   (source "/home/admin/ln10/limsn-0.1.tar.gz")
    (build-system gnu-build-system)
   (arguments `(#:tests? #false ; there are none
 			#:phases (modify-phases %standard-phases
